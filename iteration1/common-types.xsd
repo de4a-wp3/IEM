@@ -1,0 +1,267 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- 
+20-Dec-2020
+Common types for IEM Response & Request Schemas 
+Version: 1.04
+Author: DE4A WP3 & WP5
+
+Version control
+- 1.04
+	- Typo AddtionalParam corrected
+- 1.03
+	- Removal of CanonicalEvidenceDataType formerly used by the IEM Response until its version 1.02
+- 1.02 
+	- Full alignment with eIDAS SAML Attribute Profile Version 1.2: element names
+		 * LegalEntityIdentifierDatasetType: LegalPersonIdentifier and LegalName  
+		 * NaturalPersonIdentifierDatasetType: PersonIdentifier and FirstName
+- 1.01
+	- Change to xml 1.1 to support xs:any and xs:anyType
+	- AgentUrn replaces AgentUri
+	- AddtionalParametersType [0..1] replaces EvidenceServiceRequestType [1..1]
+	- AdditionalParameterValue [0..1] is no longer optional
+	- EvidenceServiceUri removed
+	
+eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2 
+https://ec.europa.eu/cefdigital/wiki/download/attachments/82773108/eIDAS%20SAML%20Attribute%20Profile%20v1.2%20Final.pdf?version=2&modificationDate=1571068651772&api=v2
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+xmlns="http://www.de4a.eu/iem/commonTypes" 
+xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
+xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
+xmlns:ein="http://eidas.europa.eu/attributes/naturalperson" 
+xmlns:eil="http://eidas.europa.eu/attributes/legalperson" 
+targetNamespace="http://www.de4a.eu/iem/commonTypes" 
+elementFormDefault="qualified" attributeFormDefault="unqualified" 
+>
+	
+    <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
+    <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
+    <xs:import schemaLocation="vocabularies/eidas-NP.xsd" namespace="http://eidas.europa.eu/attributes/naturalperson"></xs:import>
+    <xs:import schemaLocation="vocabularies/eidas-LP.xsd" namespace="http://eidas.europa.eu/attributes/legalperson"></xs:import>
+
+
+	<xs:simpleType name="RequestIdType">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the request in the whole system</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SpecificationIdType">
+		<xs:annotation>
+			<xs:documentation>Version ID of the IEM Specification</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="TimeStampType">
+		<xs:annotation>
+			<xs:documentation>Moment of the message creation</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="AgentIdentifierType">
+		<xs:annotation>
+			<xs:documentation>
+			- AgentUrn: ISO 6523 uri for a system agent (DE/DT/DR/DO) (e.g. iso6523-actorid-upis::9991:PT990000101)
+			- AgentName: localized name of the Agent
+			</xs:documentation>
+		</xs:annotation>
+	
+		<xs:sequence>
+			<xs:element name="AgentUrn" type="xs:anyURI" maxOccurs="1" minOccurs="1"></xs:element>
+			<xs:element name="AgentName" type="cv:NameType" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="CanonicalEvidenceTypeIdType">
+		<xs:annotation>
+			<xs:documentation>DE4A uri for canonical evidence types (e.g. “urn:de4a.eu:identifiers:CanonicalEvidenceType::HighEdEdCertificate:1.0")</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:any"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="DataRequestSubjectType">
+		<xs:annotation>
+			<xs:documentation>
+				Subject of the requeseted Data, either a Natural Person or a Legal Person,  which is identified by the eIDAS mandatory dataset. 
+				Optinoally, along with their respresentative Natural Person:
+				 - representatives cannot be legal entities
+				 - in the case of a natural person data subjects, the representative is the user identified in the portal of the procedure
+			</xs:documentation>
+		</xs:annotation>
+	
+		<xs:sequence>
+			<xs:choice maxOccurs="1" minOccurs="1">
+				<xs:element name="DataSubjectPerson"
+					type="NaturalPersonIdentifierDatasetType" maxOccurs="1"
+					minOccurs="1" />
+				<xs:element name="DataSubjectCompany"
+					type="LegalEntityIdentifierDatasetType" maxOccurs="1"
+					minOccurs="1" />
+			</xs:choice>
+			<xs:element name="DataSubjectRepresentative"
+				type="NaturalPersonIdentifierDatasetType" maxOccurs="1"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NaturalPersonIdentifierDatasetType">
+		<xs:annotation>
+			<xs:documentation source="http://mapping.semic.eu/vdm/description.vsp?namespace=cv&amp;type=eb004434a93bbeaa2ba5968d26af06be&amp;id=&amp;format=">
+				Natural Person eIDAS mandatory dataset and optional dataset</xs:documentation>
+		</xs:annotation>
+
+		<xs:sequence>
+			<xs:element name="PersonIdentifier" type="ein:PersonIdentifierType"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="FirstName" type="ein:CurrentGivenNameType"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="FamilyName" type="ein:CurrentFamilyNameType"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="DateOfBirth" type="ein:DateOfBirthType"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="Gender" type="ein:GenderType"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="BirthName"
+				type="ein:BirthNameType" maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="PlaceOfBirth"
+				type="ein:PlaceOfBirthType" maxOccurs="1" minOccurs="0">
+			</xs:element>
+			<xs:element name="CurrentAddress" type="ein:CurrentAddressType"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LegalEntityIdentifierDatasetType">
+		<xs:annotation>
+			<xs:documentation>Legal Entity eIDAS mandatory dataset and optional dataset</xs:documentation>
+		</xs:annotation>
+	
+		<xs:sequence>
+			<xs:element name="LegalPersonIdentifier" type="eil:LegalPersonIdentifierType" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="LegalName" type="eil:LegalNameType" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="LegalAddress" type="eil:LegalPersonAddressType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="VATRegistration" type="eil:VATRegistrationNumberType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="TaxReference" type="eil:TaxReferenceType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="D-2012-17-EUIdentifier" type="eil:D-2012-17-EUIdentifierType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="LEI" type="eil:LEIType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="EORI" type="eil:EORIType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="SEED" type="eil:SEEDType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="SIC" type="eil:SICType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProcedureType">
+		<xs:annotation>
+			<xs:documentation>Localised name of the procedure that will process the requested data</xs:documentation>
+		</xs:annotation>
+		
+		<xs:sequence>
+			<xs:element name="ProcedureName" type="cv:NameType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="TermValueType">
+		<xs:annotation>
+			<xs:documentation>
+				Value for a specifi term defined in IDK MOR (Multilingual Ontology Repository)
+				- TermMorUri: unique identifier for the evidence service parameter according to its MOR uri (e.g. urn:de4a.eu:identifiers:morterm::9920:ESS2833002E:HighEdEdCertificate-1.0:1.0:NaturalPerson:2ndFamilyName")
+				- TermValue: value according to a simple type (e.g. "Carbonell")
+			</xs:documentation>
+		</xs:annotation>	
+	
+		<xs:sequence>
+			<xs:element name="TermMorUri" type="xs:anyURI" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="TermValue" type="xs:anySimpleType" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdditionalParametersType">
+		<xs:annotation>
+			<xs:documentation>
+				- AdditionalParameterValue: set of parameters required by the service and their values besides the DataRequestSubject eIDAS minimun dataset
+			</xs:documentation>
+		</xs:annotation>	
+	
+		<xs:sequence>
+			<xs:element name="AdditionalParameterValue"
+				type="TermValueType" maxOccurs="unbounded" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="RequestGroundsType">
+		<xs:annotation>
+			<xs:documentation>
+				Whether there is a law that allows the request (the ELI permanent link of that law)
+				or there is an user's explict request according to SDGR art.14
+			</xs:documentation>
+		</xs:annotation>	
+		
+		<xs:choice maxOccurs="1" minOccurs="1">
+			<xs:element name="LawELIPermanentLink" type="xs:anyURI" maxOccurs="1" minOccurs="1"></xs:element>
+			<xs:element name="ExplicitRequest" maxOccurs="1" minOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="SDGR14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="DomesticEvidenceDataType">
+		<xs:annotation>
+			<xs:documentation>
+				The domestic evidence document is attached to the IEM message and this is the metadata of such attachment:
+				- DomesticEvidenceIdRef: unique reference to the domestic evidence attached to the message
+				- IssuingType: whether the evidence is the original one issued by the Data Owner or if it is its multilingual form according to some European harmonization
+				- MimeType: the mime-type of the attached domestic evidence (unstructured or structured document)
+				- DataLanguage: ISO 639-1 of the language of the evidence contents
+				- AdditionalInfo: optional free localized explanatory text 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DomesticEvidenceRef" type="xs:IDREF" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="IssuingType" maxOccurs="1" minOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="OriginalIssuing"/>
+						<xs:enumeration value="MultinlingualFormIssuing"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MimeType" type="xs:string" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="DataLanguage" type="xs:language" maxOccurs="unbounded" minOccurs="1"></xs:element>
+			<xs:element name="AddtionalInfo" type="ct:TextType"
+				maxOccurs="1" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+		
+	</xs:complexType>
+
+	<xs:complexType name="ErrorType">
+		<xs:annotation>
+			<xs:documentation>
+				Code: Error code
+				Message: text message correspoding to the error code
+				AdditionalInfo: optional extra information provided about the error
+				-- All de texts are in English and they are can be automatically translated if they need to be shown to the user
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="xs:string" maxOccurs="1"
+				minOccurs="1" />
+			<xs:element name="Message" type="xs:string" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="AdditionalInfo" type="xs:anyType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+		</xs:complexType>
+</xs:schema>

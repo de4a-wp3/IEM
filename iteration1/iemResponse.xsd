@@ -1,0 +1,86 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- 
+20-Dec-2020
+IEM Response Schema 
+Version: 1.02
+Author: DE4A WP3 & WP5
+Elements without comments are documented through their types defined in common-types.xsd
+
+Version Control
+- 1.02
+	- Move of Response/EvidenceResponse/CanonicalEvidence/CanonicalEvidenceTypeId element to the first level to have it with error responses
+	- Change type of Response/EvidenceResponse/CanonicalEvidence to iem:CanonicalEvidenceTypeIdType
+- 1.01
+	- Change to xml 1.1 to support xs:any and xs:anyType
+
+"ResponsetTransferEvidence" is the element that represents the DT response message to a specific canonical evidence request
+addressed to such DT by a DR. Such a request is uniquely identified by "RequestID". 
+
+The response is tagged with "TimeStamp", which contains the date and time when the response message is created and the message is 
+structured according to the IEM response version specified in "SpecificationId".
+
+The next elements are a double guarantee that the response corresponds to the corresponding "RequestID":
+- DataEvaluator: identifier of the competent authority that is responsible of processing the evidence according to the procedure regulation
+- DataOwner: identifier of the authority that is responsible of issuing the evidence with legal value
+- DataRequestSubject: eIDAS mandatory dataset of the subject of the evidence to be issued, either a legal entity or a natural person with o without representation
+- Response: either the requested evidence or the error that prevented the former
+ 
+The evidence data in the requested canonical form is available through the "CanonicalEvidence" element. Besides, the original forms
+of the evidence data might be available through the "DomesticEvidences" element.
+
+Optionally, the element "Error" might contain any error that could happen in the processing of the request message by the DT.
+
+ -->
+<xs:schema xmlns="http://www.de4a.eu/iem/response/1.01"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.de4a.eu/iem/response" 
+	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
+	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
+	xmlns:iem="http://www.de4a.eu/iem/commonTypes">
+	
+    <xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes"></xs:import>
+    <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
+    <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
+	<xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes" />
+
+	<xs:element name="ResponsetTransferEvidence">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RequestId" type="iem:RequestIdType"
+					maxOccurs="1" minOccurs="1" />
+				<xs:element name="SpecificationId"
+					type="iem:SpecificationIdType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="TimeStamp" type="iem:TimeStampType"
+					maxOccurs="1" minOccurs="1" />
+
+				<xs:element name="DataEvaluator"
+					type="iem:AgentIdentifierType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="DataOwner"
+					type="iem:AgentIdentifierType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="DataRequestSubject"
+					type="iem:DataRequestSubjectType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="CanonicalEvidenceTypeId"
+					type="iem:CanonicalEvidenceTypeIdType" maxOccurs="1" minOccurs="1">
+				</xs:element>
+				<xs:element name="Response" maxOccurs="1" minOccurs="1" >
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="EvidenceResponse" maxOccurs="1" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="CanonicalEvidence" type="iem:CanonicalEvidenceTypeIdType" maxOccurs="1" minOccurs="1" />
+										<xs:element name="DomesticEvidence" type="iem:DomesticEvidenceDataType" maxOccurs="unbounded" minOccurs="0" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ErrorResponse" type="iem:ErrorType"
+								maxOccurs="1" minOccurs="1">
+							</xs:element>						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	
+</xs:schema>
