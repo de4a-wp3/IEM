@@ -1,0 +1,88 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- 
+20-Dec-2020
+IEM Request Schema for Subscriptions
+Version: 0.01
+Author: DE4A WP3 & WP5
+Elements without comments are documented through their types defined in common-types.xsd
+
+Version 
+- 1.02 
+	- Typo AddtionalParameters corrected
+- 1.01
+	- Move up AddtionalParameters as an optional list of at least one AddtionalParameterValue
+	- Remove of EvidenceService because it is not the endpoint service but the Evidence Provision concept 
+	  that is identified by the DO (participant-id) and the C.Evidence Type (document-id)
+	- Change to xml 1.1 to support xs:any and xs:anyType
+
+"RequestTransferEvidence" is the element that represents the DR request message to obtain a specific canonical evidence 
+from the endpoint of a specific evidence service provided by a DT. Such a service is identified in the element "EvidenceServiceData", 
+which also contains the input parameters that the service might require besides the eIDAS mandatory dataset of the evidence subject.
+
+Besides, the DR that is building the request message must specify in the "ReturnServiceId" element the identificator of the service
+where the DR is waiting the response message. The DT can locate the endpoint of such service through the corresponding SML/SMP component. 
+
+The message is uniquely identified in the whole system by the "RequestID" identifier and is structured according to the IEM request 
+version specified in "SpecificationId".
+
+Besides, there is an alternative key that is composed by the elements:
+- TimeStamp: specific date and time when the message was created
+- DataEvaluator: identifier of the competent authority that is responsible of processing the evidence according to the procedure regulation
+- DataOwner: identifier of the authority that is responsible of issuing the evidence with legal value
+- DataRequestSubject: eIDAS mandatory dataset of the subject of the evidence to be issued, either a legal entity or a natural person with o without representation
+- CanonicalEventTypeId: the requested evidence according to the list of available evidence types with a canonical form
+ 
+On the other hand, the request message also includes "RequestGrounds" with the legal grounds of the request, which might be either a national or European Law or the
+explicit request of the user to use the cross-border technical system. 
+
+Optionally, the procedure that requires the evidence may be identified with the "ProcedureId" element.
+
+ -->
+<xs:schema xmlns="http://www.de4a.eu/iem/request/1.01"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.de4a.eu/iem/request" 
+	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
+	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
+	xmlns:iem="http://www.de4a.eu/iem/commonTypes" xmlns:Q1="http://www.de4a.eu/iem/request">
+	
+    <xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes"></xs:import>
+    <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
+    <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
+	<xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes" />
+
+	<xs:element name="IEMRequestMsg">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RequestId" type="iem:RequestIdType" maxOccurs="1" minOccurs="1"/>
+				<xs:element name="SpecificationId"
+					type="iem:SpecificationIdType" maxOccurs="1" minOccurs="1"/>
+				<xs:element name="TimeStamp"
+					type="iem:TimeStampType" maxOccurs="1" minOccurs="1"/>
+				<xs:element name="Procedure" type="iem:ProcedureType" maxOccurs="1" minOccurs="0"/>
+				<xs:element name="DataEvaluator" maxOccurs="1" minOccurs="1"
+					type="iem:AgentIdentifierType" />
+				<xs:element name="DataOwner" maxOccurs="1" minOccurs="1"
+					type="iem:AgentIdentifierType" />
+				<xs:element name="RequestUser" maxOccurs="1" minOccurs="1"
+					type="iem:NaturalPersonIdentifierDatasetType"/>
+				<xs:element name="RequestItem" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="EvidenceExchangeRequestItem" type="iem:EvidenceExchangeRequestItemType"/>
+							<xs:element name="EventSubscriptionRequestItem" type="iem:EventSubscriptionRequestItemType"/>
+							<xs:element name="EvidenceLookupRequestItem" type="iem:EvidenceLookUpRequestItemType"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+
+	
+
+    
+
+
+
+</xs:schema>
