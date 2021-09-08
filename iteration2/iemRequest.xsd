@@ -65,15 +65,11 @@ Optionally, the procedure that requires the evidence may be identified with the 
 					type="iem:AgentIdentifierType" />
 				<xs:element name="RequestUser" maxOccurs="1" minOccurs="1"
 					type="iem:NaturalPersonIdentifierDatasetType"/>
-				<xs:element name="RequestItem" maxOccurs="unbounded" minOccurs="1">
-					<xs:complexType>
-						<xs:choice>
-							<xs:element name="EvidenceExchangeRequestItem" type="iem:EvidenceExchangeRequestItemType"/>
-							<xs:element name="EventSubscriptionRequestItem" type="iem:EventSubscriptionRequestItemType"/>
-							<xs:element name="EvidenceLookupRequestItem" type="iem:EvidenceLookUpRequestItemType"/>
-						</xs:choice>
-					</xs:complexType>
-				</xs:element>
+				<xs:choice  maxOccurs="unbounded" minOccurs="1">
+					<xs:element name="SubscriptionRequestItem" maxOccurs="unbounded" minOccurs="0" type="iem:EventSubscriptionRequestItemType"/>
+					<xs:element name="ExchangeRequestItem" maxOccurs="unbounded" minOccurs="0" type="iem:EvidenceExchangeRequestItemType"/>
+					<xs:element name="LookupRequestItem" maxOccurs="unbounded" minOccurs="0" type="iem:EvidenceLookupRequestItemType"/>
+				</xs:choice>				
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

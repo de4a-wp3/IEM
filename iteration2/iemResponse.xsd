@@ -59,7 +59,12 @@ Optionally, the element "Error" might contain any error that could happen in the
 					type="iem:AgentIdentifierType" maxOccurs="1" minOccurs="1" />
 				<xs:element name="RequestUser"
 					type="iem:NaturalPersonIdentifierDatasetType" maxOccurs="1" minOccurs="1" />
-				<xs:element name="ResponseItem" maxOccurs="unbounded" minOccurs="1" type="iem:ResponseItemType"/>
+				<xs:choice minOccurs="1" maxOccurs="unbounded">
+					<xs:element name="SubscriptionResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:SubscriptionResponseItemType"/>
+					<xs:element name="EvidenceResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:EvidenceResponseItemType"/>
+					<xs:element name="NotificationResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:EventNotificationItemType"/>
+					<xs:element name="ErrorResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:ErrorType"/>
+				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

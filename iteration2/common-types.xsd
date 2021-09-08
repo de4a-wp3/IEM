@@ -1,58 +1,49 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!-- 
-20-Dec-2020
-Common types for IEM Response & Request Schemas 
-Version: 1.05
-Author: DE4A WP3 & WP5
+<!-- 20-Dec-2020 Common types for IEM Response & Request Schemas Version: 
+	1.05 Author: DE4A WP3 & WP5 Version control - 1.05 - Changed from xs:any 
+	to xs:anyURI in CanonicalEvidenceTypeIdType - Added CanonicalEventTypeIdType 
+	- 1.04 - Typo AddtionalParam corrected - 1.03 - Removal of CanonicalEvidenceDataType 
+	formerly used by the IEM Response until its version 1.02 - 1.02 - Full alignment 
+	with eIDAS SAML Attribute Profile Version 1.2: element names * LegalEntityIdentifierDatasetType: 
+	LegalPersonIdentifier and LegalName * NaturalPersonIdentifierDatasetType: 
+	PersonIdentifier and FirstName - 1.01 - Change to xml 1.1 to support xs:any 
+	and xs:anyType - AgentUrn replaces AgentUri - AddtionalParametersType [0..1] 
+	replaces EvidenceServiceRequestType [1..1] - AdditionalParameterValue [0..1] 
+	is no longer optional - EvidenceServiceUri removed eIDAS XSD from eIDAS SAML 
+	Attribute Profile Version 1.2 https://ec.europa.eu/cefdigital/wiki/download/attachments/82773108/eIDAS%20SAML%20Attribute%20Profile%20v1.2%20Final.pdf?version=2&modificationDate=1571068651772&api=v2 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.de4a.eu/iem/commonTypes"
+	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#"
+	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"
+	xmlns:ein="http://eidas.europa.eu/attributes/naturalperson"
+	xmlns:eil="http://eidas.europa.eu/attributes/legalperson"
+	targetNamespace="http://www.de4a.eu/iem/commonTypes"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-Version control
-- 1.05
-	- Changed from xs:any to xs:anyURI in CanonicalEvidenceTypeIdType
-	- Added CanonicalEventTypeIdType
-- 1.04
-	- Typo AddtionalParam corrected
-- 1.03
-	- Removal of CanonicalEvidenceDataType formerly used by the IEM Response until its version 1.02
-- 1.02 
-	- Full alignment with eIDAS SAML Attribute Profile Version 1.2: element names
-		 * LegalEntityIdentifierDatasetType: LegalPersonIdentifier and LegalName  
-		 * NaturalPersonIdentifierDatasetType: PersonIdentifier and FirstName
-- 1.01
-	- Change to xml 1.1 to support xs:any and xs:anyType
-	- AgentUrn replaces AgentUri
-	- AddtionalParametersType [0..1] replaces EvidenceServiceRequestType [1..1]
-	- AdditionalParameterValue [0..1] is no longer optional
-	- EvidenceServiceUri removed
-	
-eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2 
-https://ec.europa.eu/cefdigital/wiki/download/attachments/82773108/eIDAS%20SAML%20Attribute%20Profile%20v1.2%20Final.pdf?version=2&modificationDate=1571068651772&api=v2
- -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-xmlns="http://www.de4a.eu/iem/commonTypes" 
-xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
-xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
-xmlns:ein="http://eidas.europa.eu/attributes/naturalperson" 
-xmlns:eil="http://eidas.europa.eu/attributes/legalperson" 
-targetNamespace="http://www.de4a.eu/iem/commonTypes" 
-elementFormDefault="qualified" attributeFormDefault="unqualified" 
->
-	
-    <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
-    <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
-    <xs:import schemaLocation="vocabularies/eidas-NP.xsd" namespace="http://eidas.europa.eu/attributes/naturalperson"></xs:import>
-    <xs:import schemaLocation="vocabularies/eidas-LP.xsd" namespace="http://eidas.europa.eu/attributes/legalperson"></xs:import>
+	<xs:import
+		schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd"
+		namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
+	<xs:import schemaLocation="vocabularies/CV-DataTypes.xsd"
+		namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
+	<xs:import schemaLocation="vocabularies/eidas-NP.xsd"
+		namespace="http://eidas.europa.eu/attributes/naturalperson"></xs:import>
+	<xs:import schemaLocation="vocabularies/eidas-LP.xsd"
+		namespace="http://eidas.europa.eu/attributes/legalperson"></xs:import>
 
 
 	<xs:simpleType name="RequestIdType">
 		<xs:annotation>
-			<xs:documentation>Unique identifier of the request in the whole system</xs:documentation>
+			<xs:documentation>Unique identifier of the request in the whole
+				system
+			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI"></xs:restriction>
 	</xs:simpleType>
 
 	<xs:simpleType name="SpecificationIdType">
 		<xs:annotation>
-			<xs:documentation>Version ID of the IEM Specification</xs:documentation>
+			<xs:documentation>Version ID of the IEM Specification
+			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token"></xs:restriction>
 	</xs:simpleType>
@@ -67,66 +58,83 @@ elementFormDefault="qualified" attributeFormDefault="unqualified"
 	<xs:complexType name="AgentIdentifierType">
 		<xs:annotation>
 			<xs:documentation>
-			- AgentUrn: ISO 6523 uri for a system agent (DE/DT/DR/DO) (e.g. iso6523-actorid-upis::9991:PT990000101)
-			- AgentName: localized name of the Agent
+				- AgentUrn: ISO 6523 uri for a system agent
+				(DE/DT/DR/DO) (e.g.
+				iso6523-actorid-upis::9991:PT990000101)
+				-
+				AgentName: localized name of the Agent
 			</xs:documentation>
 		</xs:annotation>
-	
+
 		<xs:sequence>
-			<xs:element name="AgentUrn" type="xs:anyURI" maxOccurs="1" minOccurs="1"></xs:element>
-			<xs:element name="AgentName" type="cv:NameType" maxOccurs="unbounded" minOccurs="0"/>
+			<xs:element name="AgentUrn" type="xs:anyURI" maxOccurs="1"
+				minOccurs="1"></xs:element>
+			<xs:element name="AgentName" type="cv:NameType"
+				maxOccurs="unbounded" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:simpleType name="CanonicalEvidenceTypeIdType">
 		<xs:annotation>
-			<xs:documentation>DE4A uri for canonical evidence types (e.g. “urn:de4a.eu:identifiers:CanonicalEvidenceType::HighEdEdCertificate:1.0")</xs:documentation>
+			<xs:documentation>
+				DE4A uri for canonical evidence types (e.g.
+				urn:de4a.eu:identifiers:CanonicalEvidenceType::HighEdEdCertificate:1.0)
+			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI"></xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CanonicalEventTypeIdType">
-			<xs:annotation>
-			<xs:documentation>DE4A uri for canonical event types (e.g. “urn:de4a.eu:identifiers:CanonicalEventType::CompanyAddressChange")</xs:documentation>
+		<xs:annotation>
+			<xs:documentation>DE4A uri for canonical event types (e.g.
+				urn:de4a.eu:identifiers:CanonicalEventType::CompanyAddressChange")
+			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI"></xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="DataRequestSubjectType">
 		<xs:annotation>
 			<xs:documentation>
-				Subject of the requeseted Data, either a Natural Person or a Legal Person,  which is identified by the eIDAS mandatory dataset. 
+				Subject of the requested Data, either a Natural
+				Person or a Legal Person, which is identified by the eIDAS mandatory
+				dataset.
 				Optinoally, along with their respresentative Natural Person:
-				 - representatives cannot be legal entities
-				 - in the case of a natural person data subjects, the representative is the user identified in the portal of the procedure
+				- representatives cannot be legal entities
+				- in the case of a natural
+				person data subjects, the representative
+				is the user identified in
+				the portal of the procedure
 			</xs:documentation>
 		</xs:annotation>
-	
+
 		<xs:sequence>
 			<xs:choice maxOccurs="1" minOccurs="1">
 				<xs:element name="DataSubjectPerson"
 					type="NaturalPersonIdentifierDatasetType" maxOccurs="1"
 					minOccurs="1" />
 				<xs:element name="DataSubjectCompany"
-					type="LegalEntityIdentifierDatasetType" maxOccurs="1"
-					minOccurs="1" />
-			</xs:choice>
+					type="LegalEntityIdentifierDatasetType" maxOccurs="1" minOccurs="1" />
+			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="NaturalPersonIdentifierDatasetType">
+	<xs:complexType
+		name="NaturalPersonIdentifierDatasetType">
 		<xs:annotation>
-			<xs:documentation source="http://mapping.semic.eu/vdm/description.vsp?namespace=cv&amp;type=eb004434a93bbeaa2ba5968d26af06be&amp;id=&amp;format=">
-				Natural Person eIDAS mandatory dataset and optional dataset</xs:documentation>
+			<xs:documentation
+				source="http://mapping.semic.eu/vdm/description.vsp?namespace=cv&amp;type=eb004434a93bbeaa2ba5968d26af06be&amp;id=&amp;format=">
+				Natural Person eIDAS mandatory dataset and optional dataset
+			</xs:documentation>
 		</xs:annotation>
 
 		<xs:sequence>
-			<xs:element name="PersonIdentifier" type="ein:PersonIdentifierType"
-				maxOccurs="1" minOccurs="1">
+			<xs:element name="PersonIdentifier"
+				type="ein:PersonIdentifierType" maxOccurs="1" minOccurs="1">
 			</xs:element>
-			<xs:element name="FirstName" type="ein:CurrentGivenNameType"
-				maxOccurs="1" minOccurs="1">
+			<xs:element name="FirstName"
+				type="ein:CurrentGivenNameType" maxOccurs="1" minOccurs="1">
 			</xs:element>
-			<xs:element name="FamilyName" type="ein:CurrentFamilyNameType"
-				maxOccurs="1" minOccurs="1">
+			<xs:element name="FamilyName"
+				type="ein:CurrentFamilyNameType" maxOccurs="1" minOccurs="1">
 			</xs:element>
 			<xs:element name="DateOfBirth" type="ein:DateOfBirthType"
 				maxOccurs="1" minOccurs="1">
@@ -134,72 +142,94 @@ elementFormDefault="qualified" attributeFormDefault="unqualified"
 			<xs:element name="Gender" type="ein:GenderType"
 				maxOccurs="1" minOccurs="0">
 			</xs:element>
-			<xs:element name="BirthName"
-				type="ein:BirthNameType" maxOccurs="1" minOccurs="0">
+			<xs:element name="BirthName" type="ein:BirthNameType"
+				maxOccurs="1" minOccurs="0">
 			</xs:element>
 			<xs:element name="PlaceOfBirth"
 				type="ein:PlaceOfBirthType" maxOccurs="1" minOccurs="0">
 			</xs:element>
-			<xs:element name="CurrentAddress" type="ein:CurrentAddressType"
-				maxOccurs="1" minOccurs="0">
+			<xs:element name="CurrentAddress"
+				type="ein:CurrentAddressType" maxOccurs="1" minOccurs="0">
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="LegalEntityIdentifierDatasetType">
 		<xs:annotation>
-			<xs:documentation>Legal Entity eIDAS mandatory dataset and optional dataset</xs:documentation>
+			<xs:documentation>Legal Entity eIDAS mandatory dataset and optional
+				dataset
+			</xs:documentation>
 		</xs:annotation>
-	
+
 		<xs:sequence>
-			<xs:element name="LegalPersonIdentifier" type="eil:LegalPersonIdentifierType" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="LegalName" type="eil:LegalNameType" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="LegalAddress" type="eil:LegalPersonAddressType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="VATRegistration" type="eil:VATRegistrationNumberType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="TaxReference" type="eil:TaxReferenceType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="D-2012-17-EUIdentifier" type="eil:D-2012-17-EUIdentifierType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="LEI" type="eil:LEIType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="EORI" type="eil:EORIType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="SEED" type="eil:SEEDType" maxOccurs="1" minOccurs="0"/>
-			<xs:element name="SIC" type="eil:SICType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="LegalPersonIdentifier"
+				type="eil:LegalPersonIdentifierType" maxOccurs="1" minOccurs="1" />
+			<xs:element name="LegalName" type="eil:LegalNameType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="LegalAddress"
+				type="eil:LegalPersonAddressType" maxOccurs="1" minOccurs="0" />
+			<xs:element name="VATRegistration"
+				type="eil:VATRegistrationNumberType" maxOccurs="1" minOccurs="0" />
+			<xs:element name="TaxReference"
+				type="eil:TaxReferenceType" maxOccurs="1" minOccurs="0" />
+			<xs:element name="D-2012-17-EUIdentifier"
+				type="eil:D-2012-17-EUIdentifierType" maxOccurs="1" minOccurs="0" />
+			<xs:element name="LEI" type="eil:LEIType" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="EORI" type="eil:EORIType" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="SEED" type="eil:SEEDType" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="SIC" type="eil:SICType" maxOccurs="1"
+				minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="ProcedureType">
 		<xs:annotation>
-			<xs:documentation>Localised name of the procedure that will process the requested data</xs:documentation>
+			<xs:documentation>Localised name of the procedure that will process
+				the requested data
+			</xs:documentation>
 		</xs:annotation>
-		
+
 		<xs:sequence>
-			<xs:element name="ProcedureCategory" type="ProcedureCategoryType"></xs:element>
+			<xs:element name="ProcedureCategory"
+				type="ProcedureCategoryType"></xs:element>
 			<xs:element name="ProcedureName" type="ct:TextType" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="TermValueType">
 		<xs:annotation>
 			<xs:documentation>
-				Value for a specifi term defined in IDK MOR (Multilingual Ontology Repository)
-				- TermMorUri: unique identifier for the evidence service parameter according to its MOR uri (e.g. urn:de4a.eu:identifiers:morterm::9920:ESS2833002E:HighEdEdCertificate-1.0:1.0:NaturalPerson:2ndFamilyName")
+				Value for a specifi term defined in IDK MOR
+				(Multilingual Ontology Repository)
+				- TermMorUri: unique identifier
+				for the evidence service parameter according to its MOR uri (e.g.
+				urn:de4a.eu:identifiers:morterm::9920:ESS2833002E:HighEdEdCertificate-1.0:1.0:NaturalPerson:2ndFamilyName")
 				- TermValue: value according to a simple type (e.g. "Carbonell")
 			</xs:documentation>
-		</xs:annotation>	
-	
+		</xs:annotation>
+
 		<xs:sequence>
-			<xs:element name="TermMorUri" type="xs:anyURI" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="TermValue" type="xs:anySimpleType" maxOccurs="unbounded" minOccurs="0"/>
+			<xs:element name="TermMorUri" type="xs:anyURI"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="TermValue" type="xs:anySimpleType"
+				maxOccurs="unbounded" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="AdditionalParameterType">
 		<xs:annotation>
 			<xs:documentation>
-				- AdditionalParameterValue: set of parameters required by the service and their values besides the DataRequestSubject eIDAS minimun dataset
+				- AdditionalParameterValue: set of parameters
+				required by the service and their values besides the
+				DataRequestSubject eIDAS minimun dataset
 			</xs:documentation>
-		</xs:annotation>		
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AdditionalParameterUri"
-				type="xs:anyURI" maxOccurs="unbounded" minOccurs="1" />
+			<xs:element name="AdditionalParameterUri" type="xs:anyURI"
+				maxOccurs="unbounded" minOccurs="1" />
 			<xs:element name="AdditionalParameterValue"
 				type="TermValueType" maxOccurs="unbounded" minOccurs="1" />
 		</xs:sequence>
@@ -208,218 +238,298 @@ elementFormDefault="qualified" attributeFormDefault="unqualified"
 	<xs:complexType name="CanonicalEvidenceDataType">
 		<xs:annotation>
 			<xs:documentation>
-			The canonical evidence requested:
-			- CanonicalEvidenceTypeId: identifier of the canonical evidence type
-			- CanonicalEvidence: contents of the canonical evidence according to its specific XML Schema
+				The canonical evidence requested:
+				-
+				CanonicalEvidenceTypeId: identifier of the canonical evidence type
+				-
+				CanonicalEvidence: contents of the canonical evidence according to
+				its specific XML Schema
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CanonicalEvidenceTypeId" type="CanonicalEvidenceTypeIdType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="CanonicalEvidence" type="xs:anyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CanonicalEvidenceTypeId"
+				type="CanonicalEvidenceTypeIdType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="CanonicalEvidence" type="xs:anyType"
+				minOccurs="1" maxOccurs="1" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="DomesticEvidenceDataType">
 		<xs:annotation>
 			<xs:documentation>
-				The domestic evidence document is attached to the IEM message and this is the metadata of such attachment:
-				- DomesticEvidenceIdRef: unique reference to the domestic evidence attached to the message
-				- IssuingType: whether the evidence is the original one issued by the Data Owner or if it is its multilingual form according to some European harmonization
-				- MimeType: the mime-type of the attached domestic evidence (unstructured or structured document)
-				- DataLanguage: ISO 639-1 of the language of the evidence contents
-				- AdditionalInfo: optional free localized explanatory text 
+				The domestic evidence document is attached to the
+				IEM message and this is the metadata of such attachment:
+				-
+				DomesticEvidenceIdRef: unique reference to the domestic evidence
+				attached to the message
+				- IssuingType: whether the evidence is the
+				original one issued by the Data Owner or if it is its multilingual
+				form according to some European harmonization
+				- MimeType: the
+				mime-type of the attached domestic evidence (unstructured or
+				structured document)
+				- DataLanguage: ISO 639-1 of the language of the
+				evidence contents
+				- AdditionalInfo: optional free localized
+				explanatory text
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="DomesticEvidenceRef" type="xs:IDREF" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="DomesticEvidenceRef" type="xs:IDREF"
+				maxOccurs="1" minOccurs="1" />
 			<xs:element name="IssuingType" maxOccurs="1" minOccurs="1">
 				<xs:simpleType>
 					<xs:restriction base="xs:token">
-						<xs:enumeration value="OriginalIssuing"/>
-						<xs:enumeration value="MultinlingualFormIssuing"/>
+						<xs:enumeration value="OriginalIssuing" />
+						<xs:enumeration value="MultinlingualFormIssuing" />
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="MimeType" type="xs:string" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="DataLanguage" type="xs:language" maxOccurs="unbounded" minOccurs="1"></xs:element>
+			<xs:element name="MimeType" type="xs:string" maxOccurs="1"
+				minOccurs="1" />
+			<xs:element name="DataLanguage" type="xs:language"
+				maxOccurs="unbounded" minOccurs="1"></xs:element>
 			<xs:element name="AddtionalInfo" type="ct:TextType"
 				maxOccurs="1" minOccurs="0">
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="ResponseItemType">
-		<xs:sequence>
-			<xs:element name="RequestItemId" type="RequestItemIdType" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="DataRequestSubject" type="DataRequestSubjectType" maxOccurs="1" minOccurs="1"/>
-			<xs:choice>
-				<xs:element name="Response" maxOccurs="1" minOccurs="1" type="ResponseType"/>
-				<xs:element name="ErrorResponse" type="ErrorType" maxOccurs="1" minOccurs="1"/>
-			</xs:choice>
-		</xs:sequence>	
-	</xs:complexType>
-	
-	<xs:complexType name="ResponseType"/>
 
-	<xs:complexType name="EvidenceResponseType">
+
+	<xs:complexType name="EvidenceResponseItemType">
 		<xs:annotation>
 			<xs:documentation>
-				Response for EvidenceExhangeRequestItem and EvidenceLookupRequestItem:
-				- CanonicalEvidenceTypeIdType: identifier of the canonical evidence type matching the evidence request
-				- DomesticEvidenceDataType: optionally, corresponding domestic evidence with legal value
+				Response for EvidenceExhangeRequestItem and
+				EvidenceLookupRequestItem:
+				- CanonicalEvidenceTypeIdType: identifier
+				of the canonical evidence type matching the evidence request
+				-
+				DomesticEvidenceDataType: optionally, corresponding domestic
+				evidence with legal value
 			</xs:documentation>
-		</xs:annotation>	
-		<xs:complexContent>
-			<xs:extension base="ResponseType">
-				<xs:sequence>
-					<xs:element name="CanonicalEvidence"
-						type="CanonicalEvidenceDataType" maxOccurs="1" minOccurs="1" />
-					<xs:element name="DomesticEvidence"
-						type="DomesticEvidenceDataType" maxOccurs="unbounded" minOccurs="0" />
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	
-	<xs:complexType name="EventResponseType">
-		<xs:annotation>
-			<xs:documentation>
-				Response for EvidenceExhangeRequestItem and EvidenceLookupRequestItem:
-				- CanonicalEventTypeId: identifier of the canonical event type matching the subscription request
-				- EventSubscriptionRef:  reference of the granted subscription 
-				- subscriptionPeriod: optionally, the subscription period finally granted, according to the request and the DO restrictions on this regard
-			</xs:documentation>
-		</xs:annotation>	
-		<xs:complexContent>
-			<xs:extension base="ResponseType">
-				<xs:sequence>
-					<xs:element name="CanonicalEventTypeId" maxOccurs="1" minOccurs="1" type="CanonicalEventTypeIdType"/>
-					<xs:element name="EventSubscriptionRef" maxOccurs="1" minOccurs="1" type="EventSubscriptionRefType"/>
-					<xs:element name="subscriptionPeriod" maxOccurs="1" minOccurs="0" type="subscriptionPeriodType"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	
-	
-	<xs:complexType name="RequestItemType">
-		<xs:annotation>
-			<xs:documentation>
-				A request item for an event subscription consisting in:
-				- RequestItemId: sequential integer as an unique reference to the request item a the Request Message 
-				- DataRequestSubject: natural o legal person referred to by the request item
-			</xs:documentation>
-		</xs:annotation>	
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="RequestItemId" type="RequestItemIdType" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="DataRequestSubject" type="DataRequestSubjectType" maxOccurs="1" minOccurs="1"/>
-		</xs:sequence>	
-	</xs:complexType>	
-				
+			<xs:element name="ResponseClass" minOccurs="1"
+				maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="ResponseClassType">
+						<xs:enumeration value="EvidenceExchange" />
+						<xs:enumeration value="EvidenceLookup" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />					
+			<xs:element name="CanonicalEvidence"
+				type="CanonicalEvidenceDataType" maxOccurs="1" minOccurs="1" />
+			<xs:element name="DomesticEvidence"
+				type="DomesticEvidenceDataType" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SubscriptionResponseItemType">
+		<xs:annotation>
+			<xs:documentation>
+				Response for EventSubscriptionRequestItemType:
+				-
+				CanonicalEventTypeId: identifier of the
+				canonical event type matching
+				the subscription request
+				- EventSubscriptionRef: reference of the
+				granted subscription
+				- subscriptionPeriod: optionally, the
+				subscription period finally
+				granted, according to the request and the
+				DO restrictions on this
+				regard
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResponseClass" type="ResponseClassType"
+				minOccurs="1" maxOccurs="1" fixed="EventSubscription" />
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />						
+			<xs:element name="EventSubscriptionRef" maxOccurs="1"
+				minOccurs="1" type="EventSubscriptionRefType" />
+			<xs:element name="subscriptionPeriod" maxOccurs="1"
+				minOccurs="0" type="subscriptionPeriodType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EventNotificationItemType">
+		<xs:annotation>
+			<xs:documentation>
+				Message for the notification of a subscribed event:
+				- CanonicalEventTypeId: identifier of the
+				canonical event type
+				matching the subscription request
+				- EventSubscriptionRef: reference
+				of the granted subscription
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResponseClass" type="ResponseClassType"
+				maxOccurs="1" minOccurs="1" fixed="EventNotification" />
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />		
+			<xs:element name="CanonicalEventTypeId" maxOccurs="1"
+				minOccurs="1" type="CanonicalEventTypeIdType" />
+			<xs:element name="EventSubscriptionRef" maxOccurs="1"
+				minOccurs="1" type="EventSubscriptionRefType" />
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="EventSubscriptionRequestItemType">
 		<xs:annotation>
 			<xs:documentation>
-				- CanonicalEventTypeId: URI identifying the requested canonical event type
-				- RequestGrounds: legal ground for the request item
-				- SubscriptionPeriod: starting and ending date of the subscription 
+				- CanonicalEventTypeId: URI identifying the
+				requested canonical event type
+				- RequestGrounds: legal ground for the
+				request item
+				- SubscriptionPeriod: starting and ending date of the
+				subscription
 			</xs:documentation>
-		</xs:annotation>	
-		<xs:complexContent>
-			<xs:extension base="RequestItemType">
-					<xs:sequence>
-						<xs:element name="CanonicalEventTypeId" maxOccurs="1" minOccurs="1" type="CanonicalEventTypeIdType"/>
-						<xs:element name="RequestGrounds" maxOccurs="1" minOccurs="1">
-							<xs:complexType>
-								<xs:choice maxOccurs="1" minOccurs="1">
-									<xs:element name="LawELIPermanentLink" type="LawELIPermanentLinkGroundType" maxOccurs="1" minOccurs="1"/>
-									<xs:element name="ExplicitRequest" maxOccurs="1" minOccurs="1" type="ExplictRequestGroundType"/>
-								</xs:choice>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="subscriptionPeriod" maxOccurs="1" minOccurs="0" type="subscriptionPeriodType"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
+		</xs:annotation>
+		<xs:sequence>
+
+			<xs:element name="RequestClass" type="RequestClassType"
+				maxOccurs="1" minOccurs="1" fixed="EventSubscription" />
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />
+
+			<xs:element name="CanonicalEventTypeId" maxOccurs="1"
+				minOccurs="1" type="CanonicalEventTypeIdType" />
+			<xs:element name="RequestGrounds" maxOccurs="1"
+				minOccurs="1">
+				<xs:complexType>
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="LawELIPermanentLink"
+							type="LawELIPermanentLinkGroundType" maxOccurs="1" minOccurs="1" />
+						<xs:element name="ExplicitRequest" maxOccurs="1"
+							minOccurs="1" type="ExplictRequestGroundType" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subscriptionPeriod" maxOccurs="1"
+				minOccurs="0" type="subscriptionPeriodType" />
+		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="EvidenceExchangeRequestItemType">
 		<xs:annotation>
 			<xs:documentation>
-				- CanonicalEvidenceTypeId: URI identifying the requested canonical evidence type
-				- RequestGrounds: legal ground for the request item, either a EU Law or a user's explicit request
-				- AdditionalParameter: list of additional parameters for the record matching 
-			</xs:documentation>
-		</xs:annotation>	
-		<xs:complexContent>
-			<xs:extension base="RequestItemType">
-				<xs:sequence>
-					<xs:element name="CanonicalEvidenceTypeId" maxOccurs="1" minOccurs="1" type="CanonicalEvidenceTypeIdType"/>
-					<xs:element name="RequestGrounds" maxOccurs="1" minOccurs="1">
-						<xs:complexType>
-							<xs:choice maxOccurs="1" minOccurs="1">
-								<xs:element name="LawELIPermanentLink" type="LawELIPermanentLinkGroundType" maxOccurs="1" minOccurs="1"/>
-								<xs:element name="ExplicitRequest" maxOccurs="1" minOccurs="1" type="ExplictRequestGroundType"/>
-							</xs:choice>
-						</xs:complexType>
-					</xs:element>
-					<xs:element name="AdditionalParameter" maxOccurs="unbounded" minOccurs="0" type="AdditionalParameterType"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-
-	<xs:complexType name="EvidenceLookUpRequestItemType">
-		<xs:annotation>
-			<xs:documentation>
-				- CanonicalEvidenceTypeId: URI identifying the requested canonical evidence type
-				- RequestGrounds: reference to the event subscription corresponding to the same canonical (the only difference with EvidenceExchangeRequestItemType)
-				- AdditionalParameter: list of additional parameters for the record matching 
+				- CanonicalEvidenceTypeId: URI identifying the
+				requested canonical evidence type
+				- RequestGrounds: legal ground for
+				the request item, either a EU Law or a user's explicit request
+				-
+				AdditionalParameter: list of additional parameters for the record
+				matching
 			</xs:documentation>
 		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="RequestItemType">
-				<xs:sequence>
-					<xs:element name="CanonicalEvidenceTypeId" maxOccurs="1" minOccurs="1" type="CanonicalEvidenceTypeIdType"/>
-					<xs:element name="RequestGrounds" maxOccurs="1" minOccurs="1">
-						<xs:complexType>
-							<xs:choice maxOccurs="1" minOccurs="1">
-								<xs:element name="EventSubscriptionRef" maxOccurs="1" minOccurs="1" type="EventSubscriptionRefType"/>
-							</xs:choice>
-						</xs:complexType>
-					</xs:element>
-					<xs:element name="AdditionalParameter" maxOccurs="unbounded" minOccurs="0" type="AdditionalParameterType"/>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>	
+		<xs:sequence>
+			<xs:element name="RequestClass" type="RequestClassType"
+				maxOccurs="1" minOccurs="1" fixed="EvidenceExchange" />
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />
+
+			<xs:element name="CanonicalEvidenceTypeId" maxOccurs="1"
+				minOccurs="1" type="CanonicalEvidenceTypeIdType" />
+			<xs:element name="RequestGrounds" maxOccurs="1"
+				minOccurs="1">
+				<xs:complexType>
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="LawELIPermanentLink"
+							type="LawELIPermanentLinkGroundType" maxOccurs="1" minOccurs="1" />
+						<xs:element name="ExplicitRequest" maxOccurs="1"
+							minOccurs="1" type="ExplictRequestGroundType" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalParameter"
+				maxOccurs="unbounded" minOccurs="0" type="AdditionalParameterType" />
+		</xs:sequence>
 	</xs:complexType>
-	
+
+	<xs:complexType name="EvidenceLookupRequestItemType">
+		<xs:annotation>
+			<xs:documentation>
+				-CanonicalEvidenceTypeId: URI identifying the
+				requested canonical evidence type
+				-RequestGrounds: reference to the
+				event subscription that allows looking up the canonical evidence
+				type (the only
+				difference with EvidenceExchangeRequestGrp)
+				-AdditionalParameter: list of additional parameters for the record
+				matching
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RequestClass" type="RequestClassType"
+				maxOccurs="1" minOccurs="1" fixed="EvidenceLookup" />
+			<xs:element name="RequestItemId" type="RequestItemIdType"
+				maxOccurs="1" minOccurs="1" />
+			<xs:element name="DataRequestSubject"
+				type="DataRequestSubjectType" maxOccurs="1" minOccurs="1" />
+
+			<xs:element name="CanonicalEvidenceTypeId" maxOccurs="1"
+				minOccurs="1" type="CanonicalEvidenceTypeIdType" />
+			<xs:element name="RequestGrounds" maxOccurs="1"
+				minOccurs="1">
+				<xs:complexType>
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="EventSubscriptionRef" maxOccurs="1"
+							minOccurs="1" type="EventSubscriptionRefType" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalParameter"
+				maxOccurs="unbounded" minOccurs="0" type="AdditionalParameterType" />
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:simpleType name="ExplictRequestGroundType">
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="SDGR14" />
 		</xs:restriction>
 	</xs:simpleType>
-	
+
 	<xs:simpleType name="LawELIPermanentLinkGroundType">
-		<xs:restriction base="xs:anyURI"/>
+		<xs:restriction base="xs:anyURI" />
 	</xs:simpleType>
 
 	<xs:complexType name="ErrorType">
 		<xs:annotation>
 			<xs:documentation>
 				Code: Error code
-				Message: text message corresponding to the error code
-				AdditionalInfo: optional extra information provided about the error
-				-- All de texts are in English and they are can be automatically translated if they need to be shown to the user
+				Message: text message corresponding
+				to the error code
+				AdditionalInfo: optional extra information provided
+				about the error
+				-- All de texts are in English and they are can be
+				automatically translated if they need to be shown to the user
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Code" type="xs:string" maxOccurs="1"
 				minOccurs="1" />
-			<xs:element name="Message" type="xs:string" maxOccurs="1" minOccurs="1"/>
-			<xs:element name="AdditionalInfo" type="xs:anyType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="Message" type="xs:string" maxOccurs="1"
+				minOccurs="1" />
+			<xs:element name="AdditionalInfo" type="xs:anyType"
+				maxOccurs="1" minOccurs="0" />
 		</xs:sequence>
-		</xs:complexType>
-		
+	</xs:complexType>
+
 
 	<xs:simpleType name="RequestItemIdType">
 		<xs:restriction base="xs:int"></xs:restriction>
@@ -434,38 +544,56 @@ elementFormDefault="qualified" attributeFormDefault="unqualified"
 			<xs:element name="startDate" type="xs:date" maxOccurs="1"
 				minOccurs="0">
 			</xs:element>
-			<xs:element name="endDate" type="xs:date" maxOccurs="1" minOccurs="0"></xs:element>
+			<xs:element name="endDate" type="xs:date" maxOccurs="1"
+				minOccurs="0"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:simpleType name="ProcedureCategoryType">
+	<xs:simpleType name="ProcedureCategoryType">
 		<xs:restriction base="xs:token">
-			<xs:enumeration value="R1"/>
-			<xs:enumeration value="S1"/>
-			<xs:enumeration value="T1"/>
-			<xs:enumeration value="T2"/>
-			<xs:enumeration value="T3"/>
-			<xs:enumeration value="U1"/>
-			<xs:enumeration value="U2"/>
-			<xs:enumeration value="U3"/>
-			<xs:enumeration value="U4"/>
-			<xs:enumeration value="V1"/>
-			<xs:enumeration value="V2"/>
-			<xs:enumeration value="V3"/>
-			<xs:enumeration value="V4"/>
-			<xs:enumeration value="W1"/>
-			<xs:enumeration value="W2"/>
-			<xs:enumeration value="X1"/>
-			<xs:enumeration value="X2"/>
-			<xs:enumeration value="X3"/>
-			<xs:enumeration value="X4"/>
-			<xs:enumeration value="X5"/>
-			<xs:enumeration value="X6"/>
-			<xs:enumeration value="2005/36/EC"/>
-			<xs:enumeration value="2006/123/EC"/>
-			<xs:enumeration value="2014/24/EU"/>
-			<xs:enumeration value="2014/25/EU"/>
-			<xs:enumeration value="noSDG"/>
+			<xs:enumeration value="R1" />
+			<xs:enumeration value="S1" />
+			<xs:enumeration value="T1" />
+			<xs:enumeration value="T2" />
+			<xs:enumeration value="T3" />
+			<xs:enumeration value="U1" />
+			<xs:enumeration value="U2" />
+			<xs:enumeration value="U3" />
+			<xs:enumeration value="U4" />
+			<xs:enumeration value="V1" />
+			<xs:enumeration value="V2" />
+			<xs:enumeration value="V3" />
+			<xs:enumeration value="V4" />
+			<xs:enumeration value="W1" />
+			<xs:enumeration value="W2" />
+			<xs:enumeration value="X1" />
+			<xs:enumeration value="X2" />
+			<xs:enumeration value="X3" />
+			<xs:enumeration value="X4" />
+			<xs:enumeration value="X5" />
+			<xs:enumeration value="X6" />
+			<xs:enumeration value="2005/36/EC" />
+			<xs:enumeration value="2006/123/EC" />
+			<xs:enumeration value="2014/24/EU" />
+			<xs:enumeration value="2014/25/EU" />
+			<xs:enumeration value="noSDG" />
 		</xs:restriction>
-    </xs:simpleType>
+	</xs:simpleType>
+
+	<xs:simpleType name="RequestClassType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="EvidenceExchange" />
+			<xs:enumeration value="EventSubscription" />
+			<xs:enumeration value="EvidenceLookup" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OneWayResponseType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="EventNotification" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResponseClassType">
+		<xs:union memberTypes="RequestClassType OneWayResponseType" />
+	</xs:simpleType>
 </xs:schema>
