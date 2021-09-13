@@ -194,8 +194,8 @@
 
 		<xs:sequence>
 			<xs:element name="ProcedureCategory"
-				type="ProcedureCategoryType"></xs:element>
-			<xs:element name="ProcedureName" type="ct:TextType" />
+				type="ProcedureCategoryType" maxOccurs="unbounded" minOccurs="1"></xs:element>
+			<xs:element name="ProcedureName" type="ct:TextType" maxOccurs="1" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -576,7 +576,8 @@
 			<xs:enumeration value="2006/123/EC" />
 			<xs:enumeration value="2014/24/EU" />
 			<xs:enumeration value="2014/25/EU" />
-			<xs:enumeration value="noSDG" />
+			<xs:enumeration value="BUSnoSDG" />
+			<xs:enumeration value="CITnoSDG" />
 		</xs:restriction>
 	</xs:simpleType>
 
