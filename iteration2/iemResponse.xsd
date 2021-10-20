@@ -3,14 +3,16 @@
 20-Dec-2020
 IEM Response Schema 
 Version: 2.00
+Last modified: 19-Oct-2021
 Author: DE4A WP3 & WP5
 Elements without comments are documented through their types defined in common-types.xsd
 
 Version Control
 - 2.00
-	- Support to multievidence request in one message exchange 
+	- Support to multi request in one message exchange 
 	- Support to Subscription & Notification pattern
 	- Support to Lookup pattern
+	- Support to the two responses for the USIP evidence request
 - 1.02
 	- Move of Response/EvidenceResponse/CanonicalEvidence/CanonicalEvidenceTypeId element to the first level to have it with error responses
 	- Change type of Response/EvidenceResponse/CanonicalEvidence to iem:CanonicalEvidenceTypeIdType
@@ -66,6 +68,9 @@ Optionally, the element "Error" might contain any error that could happen in the
 						maxOccurs="unbounded" minOccurs="0"
 						type="iem:SubscriptionResponseItemType" />
                     <xs:element name="NotificationResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:EventNotificationItemType" />
+                    
+                    <xs:element name="UserRedirectionResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:UserRedirectionResponseItemType" />
+                    
                     <xs:element name="EvidenceResponseItem"
 						maxOccurs="unbounded" minOccurs="0"
 						type="iem:EvidenceResponseItemType" />

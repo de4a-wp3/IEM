@@ -3,15 +3,16 @@
 Created 20-Dec-2020 
 IEM Request Schema for Subscriptions 
 Version: 2.00 
-Last modified: 20-Sep-2021
+Last modified: 19-Oct-2021
 Author: 
 	DE4A WP3 & WP5 Elements without comments are documented through their types 
 	defined in common-types.xsd 
 Version control:
 - 2.00
-	- Support to multievidence request in one message exchange 
+	- Support to multi request in one message exchange 
 	- Support to Subscription & Notification pattern
 	- Support to Lookup pattern
+	- Support to the two responses for the USIP evidence request
 - 1.02 
 	- Typo AddtionalParameters corrected 
 - 1.01 
@@ -77,6 +78,19 @@ Version 1 comments:
 		namespace="http://www.de4a.eu/iem/commonTypes" />
 
 	<xs:element name="IEMRequestMsg">
+	<xs:annotation>
+		<xs:documentation>
+			The IEMRequestMsg may include several types of request items.
+			Request items related to both the subscription-and-notification
+			pattern and the lookup pattern are not linked to a specific
+			procedure, so so the information contained in the mandatory element 
+			"Procedure" does not need to be processed by any of the participants 
+			in these patterns (DE/DR/DT/DO). Potentially, the enum sub-element 
+			"ProcedureCategory" might be used by some ex-ante or ex-post 
+			authorization controls. Domestic name and uri are not relevant
+			so any generic name to describe the purpose of the request is enough. 
+		</xs:documentation>
+	</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="RequestId" type="iem:RequestIdType"
@@ -92,16 +106,15 @@ Version 1 comments:
 				<xs:element name="DataOwner" maxOccurs="1" minOccurs="1"
 					type="iem:AgentIdentifierType" />
 				<xs:choice maxOccurs="unbounded" minOccurs="1">
-					<xs:element name="SubscripChangeRequestItem"
-						type="iem:SubscripChangeRequestItemType" 
-						maxOccurs="unbounded" minOccurs="0"/>
-					<xs:element name="LookupRequestItem" maxOccurs="unbounded" minOccurs="0" type="iem:EvidenceLookupRequestItemType"/>
-					<xs:element name="EventSubscriptionRequestItem"
+					<xs:element name="EventSubscripRequestItem"
 						maxOccurs="unbounded" minOccurs="0"
-						type="iem:EventSubscriptionRequestItemType"/>
+						type="iem:EventSubscripRequestItemType"/>
 					<xs:element name="ExchangeRequestItem"
 						maxOccurs="unbounded" minOccurs="0"
 						type="iem:EvidenceExchangeRequestItemType"/>
+					<xs:element name="ExchangeUsiRequestItem"
+						maxOccurs="unbounded" minOccurs="0"
+						type="iem:EvidenceExchangeRequestUsiItemType"/>
 				</xs:choice>
 			</xs:sequence>
 		</xs:complexType>
