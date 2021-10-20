@@ -481,8 +481,8 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 				implement the User-Supported Intermediation Pattern by 
 				adding the mandatory element "DataEvaluatorURL" as "xs:anyURI"
 				This request item have two responses: 
-					1º) UserRedirectionURLResponseItem
-					2º) EvidenceResponseItem
+					1st) UserRedirectionURLResponseItem
+					2nd) EvidenceResponseItem
 			</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
