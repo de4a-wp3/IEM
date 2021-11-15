@@ -348,7 +348,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 		</xs:sequence>
 	</xs:complexType>
 
-
+	<xs:complexType name="EventNotificationRefType"></xs:complexType>
 
 	<xs:complexType name="EvidenceRequestItemType">
 		<xs:annotation>
@@ -365,7 +365,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 				-CanonicalEvidenceTypeUri: URI identifying the
 				   requested canonical evidence type.
 				   Used as "documentType" in SMPs.
-				-RequestGrounds: reference(s) to the event notification
+				-RequestGrounds: event notification
 				  that allows looking up the canonical evidence, or 
 				  permanent ELI link to national legislation that
 				  provided the legal basis for requesting such an evidence, 
@@ -383,9 +383,8 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 			<xs:element name="RequestGrounds" maxOccurs="1" minOccurs="1">
 				<xs:complexType>
 					<xs:sequence maxOccurs="unbounded" minOccurs="1">
-						<xs:element name="EventNotificationRef"
-							maxOccurs="unbounded" minOccurs="0" 
-							type="xs:token" fixed="EventNotification"/>
+						<xs:element name="EventNotification" maxOccurs="1" 
+							minOccurs="0" type="EventNotificationRefType"/>
 						<xs:element name="LawELIPermanentLink"
 							type="LawELIPermanentLinkGroundType" 
 							maxOccurs="unbounded" minOccurs="0" />
