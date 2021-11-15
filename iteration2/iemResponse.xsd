@@ -37,19 +37,18 @@ of the evidence data might be available through the "DomesticEvidences" element.
 Optionally, the element "Error" might contain any error that could happen in the processing of the request message by the DT.
 
  -->
-<xs:schema xmlns="http://www.de4a.eu/iem/response/1.01"
+<xs:schema xmlns="http://www.de4a.eu/iem/response/2.00"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.de4a.eu/iem/response" 
 	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
 	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
-	xmlns:iem="http://www.de4a.eu/iem/commonTypes">
+	xmlns:iem="http://www.de4a.eu/iem/commonTypes/2.00">
 	
-    <xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes"></xs:import>
+    <xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes/2.00"></xs:import>
     <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
     <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
-	<xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes" />
 
-	<xs:element name="IEMResponsetMsg">
+	<xs:element name="IEMResponseMsg">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="RequestId" type="iem:RequestIdType"
@@ -66,9 +65,7 @@ Optionally, the element "Error" might contain any error that could happen in the
 				<xs:choice minOccurs="1" maxOccurs="unbounded">
 					<xs:element name="SubscriptionResponseItem"
 						maxOccurs="unbounded" minOccurs="0"
-						type="iem:SubscriptionResponseItemType" />
-                    <xs:element name="NotificationResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:EventNotificationItemType" />
-                    
+						type="iem:SubscriptionResponseItemType" />                  
                     <xs:element name="UserRedirectionResponseItem" maxOccurs="unbounded" minOccurs="0" type="iem:UserRedirectionResponseItemType" />
                     
                     <xs:element name="EvidenceResponseItem"

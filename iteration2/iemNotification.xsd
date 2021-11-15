@@ -1,0 +1,127 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!-- 
+29-Oct-2021
+IEM Event Notification Schema 
+Version: 1.00
+Last modified: 29-Oct-2021
+Author: DE4A WP3 & WP5
+Elements without comments are documented through their types defined in common-types.xsd
+
+Version Control
+- 1.00 schema creation
+
+"ResponsetTransferEvidence" is the element that represents the DT response message to a specific canonical evidence request
+addressed to such DT by a DR. Such a request is uniquely identified by "RequestID". 
+
+The response is tagged with "TimeStamp", which contains the date and time when the response message is created and the message is 
+structured according to the IEM response version specified in "SpecificationId".
+
+The next elements are a double guarantee that the response corresponds to the corresponding "RequestID":
+- DataEvaluator: identifier of the competent authority that is responsible of processing the evidence according to the procedure regulation
+- DataOwner: identifier of the authority that is responsible of issuing the evidence with legal value
+- DataRequestSubject: eIDAS mandatory dataset of the subject of the evidence to be issued, either a legal entity or a natural person with o without representation
+- Response: either the requested evidence or the error that prevented the former
+ 
+The evidence data in the requested canonical form is available through the "CanonicalEvidence" element. Besides, the original forms
+of the evidence data might be available through the "DomesticEvidences" element.
+
+Optionally, the element "Error" might contain any error that could happen in the processing of the request message by the DT.
+
+ -->
+<xs:schema xmlns="http://www.de4a.eu/iem/notification/1.00"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.de4a.eu/iem/notification" 
+	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#" 
+	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2" 
+	xmlns:iem="http://www.de4a.eu/iem/commonTypes/2.00" xmlns:Q1="http://www.de4a.eu/iem/notification">
+	
+    <xs:import schemaLocation="common-types.xsd" namespace="http://www.de4a.eu/iem/commonTypes/2.00"></xs:import>
+    <xs:import schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd" namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
+    <xs:import schemaLocation="vocabularies/CV-DataTypes.xsd" namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
+	
+	<xs:complexType name="EventNotificationItemType">
+		<xs:annotation>
+			<xs:documentation>
+				Message Item for the notification to a subscriber of a event 
+				included the subscribed catalogue.
+				Notification items are part of a IEMResponseMsg because it is 
+				from DO to DE and it is sent on behalf of a subscription request 
+				received in the past. However, it is not directly linked to any     
+				immediately previous request message, so the element "RequestId" 
+				of the IEMResponseMsg common data has to be ignored by DE/DR 
+				when processing this type of items.
+				If the IEMResponseMsg is only composed by notification items, 
+				the "RequestId" element just uniquely identifies the 
+				response message.
+				-NotificationItemId: id to uniquely identify the item within 
+				   	the message (e.g., serial number)				
+				-EventId: identifying name (token) of the notified event that 
+					belongs to the subscribed catalog
+				-EventSubject: subject of the notified event
+				-CanonicalEventCatalogUri: URI of the event catalog
+					where the DE is subscribed to and the notified event
+					belongs to, e.g. 
+					urn:de4a.eu:identifiers:CanonicalEventType::BusinessEvents
+				-EventDate: date when the event occurred 
+				-RelatedEventSubject: optionally, other data subjects that 
+					can be involved in the event
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NotificationItemId" type="iem:MsgItemIdType"
+				maxOccurs="1" minOccurs="1" />		
+			<xs:element name="EventId"
+				type="xs:token" maxOccurs="1" minOccurs="1" />
+			<xs:element name="EventSubject"
+				type="iem:DataSubjectType" maxOccurs="1" minOccurs="1" />
+			<xs:element name="CanonicalEventCatalogUri" maxOccurs="1"
+				minOccurs="1" type="xs:anyURI" />
+			<xs:element name="EventDate" type="iem:UTCDateTime"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="RelatedEventSubject"
+				type="iem:DataSubjectType" maxOccurs="unbounded" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="IEMEventNotificationMsg">
+	<xs:annotation>
+		<xs:documentation>
+		Unidirectional message to implement the notification pattern.
+		When an event occurs related to a subscription to a event catalog 
+		regarding a particular dataSubject, the data owner notifies the event
+		to the subscriber:
+		- NotificationId: unique identifier of the message (UUDI or equivalent)
+		- SpecificationId: version ID of the IEM Specification
+		- TimeStamp: moment of the sending
+		- DataEvaluator: subscriber URI
+		- DataOwner: data event sender URI
+		- EventNotification: one or more occurring event described by a set
+			of elements 
+		</xs:documentation>
+	</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NotificationId" type="iem:RequestIdType"
+					maxOccurs="1" minOccurs="1" />
+				<xs:element name="SpecificationId"
+					type="iem:SpecificationIdType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="TimeStamp" type="iem:TimeStampType"
+					maxOccurs="1" minOccurs="1" />
+
+				<xs:element name="DataEvaluator"
+					type="iem:AgentIdentifierType" maxOccurs="1" minOccurs="1" />
+				<xs:element name="DataOwner"
+					type="iem:AgentIdentifierType" maxOccurs="1" minOccurs="1" />				<xs:sequence>
+					<xs:element name="EventNotification"
+						type="Q1:EventNotificationItemType" maxOccurs="unbounded"
+						minOccurs="1" />
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+	
+</xs:schema>

@@ -59,23 +59,21 @@ Version 1 comments:
 	The procedure that requires the  evidence may be identified with 
 	the "ProcedureId" element. 
 -->
-<xs:schema xmlns="http://www.de4a.eu/iem/request/1.01"
+<xs:schema xmlns="http://www.de4a.eu/iem/request/2.00"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.de4a.eu/iem/request"
 	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#"
 	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"
-	xmlns:iem="http://www.de4a.eu/iem/commonTypes"
+	xmlns:iem="http://www.de4a.eu/iem/commonTypes/2.00"
 	xmlns:Q1="http://www.de4a.eu/iem/request">
 
 	<xs:import schemaLocation="common-types.xsd"
-		namespace="http://www.de4a.eu/iem/commonTypes"></xs:import>
+		namespace="http://www.de4a.eu/iem/commonTypes/2.00"></xs:import>
 	<xs:import
 		schemaLocation="vocabularies/CCTS_CCT_SchemaModule-2.1.xsd"
 		namespace="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"></xs:import>
 	<xs:import schemaLocation="vocabularies/CV-DataTypes.xsd"
 		namespace="https://semic.org/sa/cv/common/dataTypes-2.0.0#"></xs:import>
-	<xs:import schemaLocation="common-types.xsd"
-		namespace="http://www.de4a.eu/iem/commonTypes" />
 
 	<xs:element name="IEMRequestMsg">
 	<xs:annotation>

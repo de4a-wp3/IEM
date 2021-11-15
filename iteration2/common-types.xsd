@@ -34,12 +34,12 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 	https://ec.europa.eu/cefdigital/wiki/download/attachments/82773108/eIDAS%20SAML%20Attribute%20Profile%20v1.2%20Final.pdf?version=2&modificationDate=1571068651772&api=v2 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns="http://www.de4a.eu/iem/commonTypes"
+	xmlns="http://www.de4a.eu/iem/commonTypes/2.00"
 	xmlns:cv="https://semic.org/sa/cv/common/dataTypes-2.0.0#"
 	xmlns:ct="urn:un:unece:uncefact:data:specification:CoreComponentTypeSchemaModule:2"
 	xmlns:ein="http://eidas.europa.eu/attributes/naturalperson"
 	xmlns:eil="http://eidas.europa.eu/attributes/legalperson"
-	targetNamespace="http://www.de4a.eu/iem/commonTypes"
+	targetNamespace="http://www.de4a.eu/iem/commonTypes/2.00"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xs:import
@@ -349,63 +349,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 	</xs:complexType>
 
 
-	<xs:complexType name="EventNotificationItemType">
-		<xs:annotation>
-			<xs:documentation>
-				Message Item for the notification to a subscriber of a event 
-				included the subscribed catalogue.
-				Notification items are part of a IEMResponseMsg because it is 
-				from DO to DE and it is sent on behalf of a subscription request 
-				received in the past. However, it is not directly linked to any     
-				immediately previous request message, so the element "RequestId" 
-				of the IEMResponseMsg common data has to be ignored by DE/DR 
-				when processing this type of items.
-				If the IEMResponseMsg is only composed by notification items, 
-				the "RequestId" element just uniquely identifies the 
-				response message.
-				-NotificationRef: unique identifier of the item within
-					the message, also to be used in evidence lookup requests
-					as request grounds				
-				-EventId: identifying name (token) of the notified event that 
-					belongs to the subscribed catalog
-				-EventSubject: subject of the notified event
-				-CanonicalEventCatalogUri: URI of the event catalog
-					where the DE is subscribed to and the notified event
-					belongs to, e.g. 
-					urn:de4a.eu:identifiers:CanonicalEventType::BusinessEvents
-				-EventDate: date when the event occurred 
-				-RelatedEventSubject: optionally, other data subjects that 
-					can be involved in the event
-			</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="NotificationRef" maxOccurs="1"
-				minOccurs="1" type="EventNotificationRefType"/>		
-			<xs:element name="EventId"
-				type="xs:token" maxOccurs="1" minOccurs="1" />
-			<xs:element name="EventSubject"
-				type="DataSubjectType" maxOccurs="1" minOccurs="1" />
-			<xs:element name="CanonicalEventCatalogUri" maxOccurs="1"
-				minOccurs="1" type="xs:anyURI" />
-			<xs:element name="EventDate" type="UTCDateTime"
-				maxOccurs="1" minOccurs="1">
-			</xs:element>
-			<xs:element name="RelatedEventSubject"
-				type="DataSubjectType" maxOccurs="unbounded" minOccurs="0">
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 
-	<xs:simpleType name="EventNotificationRefType">
-	<xs:annotation>
-		<xs:documentation>
-			Reference of event notification for using it in possible 
-			subsequent lookup evidence message
-		</xs:documentation>
-	</xs:annotation>
-		<xs:restriction base="xs:anyURI"/>
-	</xs:simpleType>
-	
 	<xs:complexType name="EvidenceRequestItemType">
 		<xs:annotation>
 			<xs:documentation>
@@ -441,7 +385,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 					<xs:sequence maxOccurs="unbounded" minOccurs="1">
 						<xs:element name="EventNotificationRef"
 							maxOccurs="unbounded" minOccurs="0" 
-							type="EventNotificationRefType" />
+							type="xs:token" fixed="EventNotification"/>
 						<xs:element name="LawELIPermanentLink"
 							type="LawELIPermanentLinkGroundType" 
 							maxOccurs="unbounded" minOccurs="0" />
@@ -538,9 +482,12 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 					that motivates this response
 				-CanonicalEventCatalogUri: corresponding catalogue of the
 					subscription, as a security redundancy to RequestItemId 
+				- DataRequestSubject: corresponding data subject of the
+					subscription, as a security redundancy to RequestItemId 
 				-SubscriptionPeriod: optionally, the
 					actual start and/or end date of notifications if the data
-					owner considers a different period
+					owner considers a different period. At least the start date
+					of the subscription should be set
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -548,8 +495,9 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 				maxOccurs="1" minOccurs="1" />
 			<xs:element name="CanonicalEventCatalogUri" maxOccurs="1"
 				minOccurs="1" type="xs:anyURI" />
+			<xs:element name="DataRequestSubject " type="DataSubjectType" maxOccurs="1" minOccurs="1"></xs:element>
 			<xs:element name="SubscriptionPeriod" maxOccurs="1"
-				minOccurs="0" type="SubscriptionPeriodType" />
+				minOccurs="1" type="SubscriptionPeriodType" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -616,7 +564,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 	<xs:complexType name="SubscriptionPeriodType">
 		<xs:sequence>
 			<xs:element name="StartDate" type="UTCDateTime" maxOccurs="1"
-				minOccurs="0">
+				minOccurs="1">
 			</xs:element>
 			<xs:element name="EndDate" type="UTCDateTime" maxOccurs="1"
 				minOccurs="0"></xs:element>
