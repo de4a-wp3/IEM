@@ -55,7 +55,7 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 	<xs:simpleType name="RequestIdType">
 		<xs:annotation>
 			<xs:documentation>Unique identifier of the request in the whole
-				system
+				system, for instance, a UUID
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI"></xs:restriction>

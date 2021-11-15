@@ -92,7 +92,7 @@ Optionally, the element "Error" might contain any error that could happen in the
 		When an event occurs related to a subscription to a event catalog 
 		regarding a particular dataSubject, the data owner notifies the event
 		to the subscriber:
-		- NotificationId: unique identifier of the message (UUDI or equivalent)
+		- NotificationId: unique identifier of the message (UUID or equivalent)
 		- SpecificationId: version ID of the IEM Specification
 		- TimeStamp: moment of the sending
 		- DataEvaluator: subscriber URI
