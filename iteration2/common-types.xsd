@@ -6,6 +6,9 @@ Version:  2.0
 Last modified: 19-Oct-2021
 Author: DE4A WP3 & WP5 
 Version control
+- 2.01 
+    - Localization of error codes and error texts
+    - Added new optional element in ErrorType for a description of the error
 - 2.00
 	- Support to multi request in one message exchange 
 	- Support to Subscription & Notification pattern
