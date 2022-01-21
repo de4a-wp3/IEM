@@ -541,9 +541,9 @@ eIDAS XSD from eIDAS SAML Attribute Profile Version 1.2:
 				<xs:element name="CanonicalEventCatalogUri" maxOccurs="1"
 				minOccurs="1" type="xs:anyURI" />
 			</xs:choice>
-			<xs:element name="Code" type="xs:string" maxOccurs="1"
+			<xs:element name="Code" type="ct:IdentifierType" maxOccurs="1"
 				minOccurs="1" />
-			<xs:element name="Message" type="xs:string" maxOccurs="1"
+			<xs:element name="Message" type="ct:TextType" maxOccurs="1"
 				minOccurs="1" />
 			<xs:element name="AdditionalInfo" type="xs:anyType"
 				maxOccurs="1" minOccurs="0" />
